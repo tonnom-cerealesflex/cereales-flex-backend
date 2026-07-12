@@ -1,0 +1,59 @@
+.admin-body{background:#F7F2E7;font-family:'Work Sans',sans-serif;color:#1B2740;margin:0;}
+.hidden{display:none !important;}
+.muted{color:#6b6455;font-size:13.5px;}
+
+.admin-login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.admin-login-card{background:#fff;border-radius:16px;padding:34px;max-width:360px;width:100%;box-shadow:0 4px 24px rgba(27,39,64,.1);}
+.admin-login-card h1{font-family:'Fraunces',serif;font-size:24px;margin:0 0 2px;}
+.error-msg{color:#B15A3B;font-size:13px;margin-top:10px;}
+
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.03em;color:#6b6455;margin-bottom:5px;}
+.field input, .field select{width:100%;padding:9px 12px;border:1px solid #E4D9C3;border-radius:8px;font-family:inherit;font-size:14px;}
+.checkbox-field label{display:flex;align-items:center;gap:8px;text-transform:none;font-size:14px;font-weight:400;}
+.checkbox-field input{width:auto;}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px;}
+
+.btn-primary{background:#1B2740;color:#F7F2E7;border:none;border-radius:24px;padding:11px 22px;font-weight:600;font-size:13.5px;cursor:pointer;}
+.btn-primary:hover{background:#2A3B5C;}
+.btn-ghost{background:none;border:1.5px solid #1B2740;border-radius:20px;padding:8px 16px;font-size:13px;cursor:pointer;}
+.small-btn{border:1px solid #E4D9C3;background:#fff;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;}
+.small-btn:hover{border-color:#1B2740;}
+.danger{color:#B15A3B;}
+
+.admin-top{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;background:#1B2740;color:#fff;}
+.brand-mini{font-family:'Fraunces',serif;font-weight:600;font-size:18px;}
+.admin-top-right{display:flex;gap:14px;align-items:center;}
+.admin-top .btn-ghost{color:#fff;border-color:rgba(255,255,255,.5);}
+.notif-bell{cursor:pointer;position:relative;font-size:18px;}
+.notif-count{background:#B15A3B;color:#fff;font-size:10px;border-radius:10px;padding:1px 6px;position:absolute;top:-8px;right:-10px;}
+.notif-panel{position:absolute;right:24px;top:60px;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.15);max-width:340px;max-height:400px;overflow:auto;padding:10px;z-index:100;}
+.notif-panel .n-item{padding:8px;border-bottom:1px solid #eee;font-size:13px;}
+.notif-panel .n-item:last-child{border-bottom:none;}
+.notif-panel .n-date{color:#999;font-size:11px;}
+
+.admin-tabs{display:flex;gap:6px;padding:14px 24px 0;flex-wrap:wrap;}
+.tab-btn{background:none;border:none;padding:9px 16px;border-radius:20px 20px 0 0;font-size:13.5px;font-weight:500;color:#6b6455;cursor:pointer;}
+.tab-btn.active{background:#fff;color:#1B2740;font-weight:600;}
+.admin-main{background:#fff;margin:0 24px 24px;border-radius:0 12px 12px 12px;padding:26px;box-shadow:0 2px 14px rgba(27,39,64,.06);}
+.tab-panel h2{font-family:'Fraunces',serif;font-size:19px;margin:0 0 14px;}
+
+table.admin-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+table.admin-table th{text-align:left;font-size:11px;text-transform:uppercase;color:#6b6455;border-bottom:1px solid #E4D9C3;padding:8px 6px;}
+table.admin-table td{padding:9px 6px;border-bottom:1px solid #E4D9C3;vertical-align:middle;}
+table.admin-table img{width:36px;height:36px;object-fit:cover;border-radius:6px;}
+.tag-promo{background:#B15A3B;color:#fff;font-size:10.5px;padding:2px 8px;border-radius:10px;}
+.tag-premium{background:#E0A83E;font-size:10.5px;padding:2px 8px;border-radius:10px;}
+
+.conv-card{border:1px solid #E4D9C3;border-radius:10px;padding:14px;margin-bottom:12px;}
+.conv-card .conv-head{display:flex;justify-content:space-between;margin-bottom:8px;font-weight:600;}
+.conv-msg{padding:6px 10px;border-radius:10px;margin-bottom:6px;max-width:80%;font-size:13.5px;}
+.conv-msg.client{background:#F1E9D8;}
+.conv-msg.admin{background:#1B2740;color:#fff;margin-left:auto;}
+.reply-row{display:flex;gap:8px;margin-top:8px;}
+.reply-row input{flex:1;padding:8px 10px;border:1px solid #E4D9C3;border-radius:8px;}
+
+@media(max-width:720px){
+  .admin-tabs{overflow-x:auto;flex-wrap:nowrap;}
+  .admin-main{margin:0 10px 10px;}
+}
