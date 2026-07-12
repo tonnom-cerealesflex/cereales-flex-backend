@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administration — Céréales Flex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+<div id="loginScreen" class="admin-login-wrap">
+  <div class="admin-login-card">
+    <h1>Céréales Flex</h1>
+    <p class="muted">Espace administration</p>
+    <div class="field">
+      <label>URL de l'API</label>
+      <input id="apiBaseInput" placeholder="https://ton-service.onrender.com">
+    </div>
+    <div class="field">
+      <label>Mot de passe admin</label>
+      <input id="passInput" type="password">
+    </div>
+    <button class="btn-primary" style="width:100%" onclick="login()">Se connecter</button>
+    <p id="loginError" class="error-msg hidden"></p>
+  </div>
+</div>
+
+<div id="dashboard" class="hidden">
+  <header class="admin-top">
+    <span class="brand-mini">Céréales Flex — Admin</span>
+    <div class="admin-top-right">
+      <span id="notifBell" class="notif-bell" onclick="toggleNotifPanel()">🔔 <span id="notifCount" class="notif-count hidden">0</span></span>
+      <button class="btn-ghost" onclick="logout()">Déconnexion</button>
+    </div>
+  </header>
+
+  <div id="notifPanel" class="notif-panel hidden"></div>
+
+  <nav class="admin-tabs">
+    <button class="tab-btn active" data-tab="produits">Produits & Images</button>
+    <button class="tab-btn" data-tab="promos">Promotions</button>
+    <button class="tab-btn" data-tab="transport">Livraison & Paiement</button>
+    <button class="tab-btn" data-tab="clients">Clients</button>
+    <button class="tab-btn" data-tab="messages">Messages</button>
+    <button class="tab-btn" data-tab="commandes">Commandes</button>
+  </nav>
+
+  <main class="admin-main">
+
+    <section id="tab-produits" class="tab-panel">
+      <h2>Ajouter un produit</h2>
+      <div class="form-grid">
+        <div class="field"><label>Nom</label><input id="npName"></div>
+        <div class="field"><label>Catégorie</label>
+          <select id="npCat">
+            <option value="cereales">Céréales</option>
+            <option value="farines">Farines</option>
+            <option value="son">Aliments bétail/volaille</option>
+            <option value="couveuses">Couveuses</option>
+            <option value="materiel">Matériel élevage/agriculture</option>
+          </select>
+        </div>
+        <div class="field"><label>Format</label><input id="npFmt" placeholder="ex: Sac de 25 kg"></div>
+        <div class="field"><label>Prix (FCFA)</label><input id="npPrice" type="number"></div>
+        <div class="field"><label>URL de l'image</label><input id="npImage" placeholder="https://..."></div>
+      </div>
+      <button class="btn-primary" onclick="addProduct()">Ajouter</button>
+      <h2 style="margin-top:30px;">Produits</h2>
+      <div id="productTable"></div>
+    </section>
+
+    <section id="tab-promos" class="tab-panel hidden">
+      <h2>Activer une promotion</h2>
+      <div class="form-grid">
+        <div class="field"><label>Produit</label><select id="promoProductSelect"></select></div>
+        <div class="field"><label>Réduction (%)</label><input id="promoPctInput" type="number" value="10"></div>
+      </div>
+      <button class="btn-primary" onclick="applyPromo()">Activer la promo</button>
+      <p class="muted">Une notification est envoyée automatiquement à chaque activation/retrait de promo.</p>
+      <h2 style="margin-top:26px;">Promotions actives</h2>
+      <div id="promoList"></div>
+    </section>
+
+    <section id="tab-transport" class="tab-panel hidden">
+      <h2>Tarif de livraison (basé sur la distance)</h2>
+      <div class="form-grid">
+        <div class="field"><label>Frais de base (FCFA)</label><input id="transBase" type="number"></div>
+        <div class="field"><label>Prix par km (FCFA)</label><input id="transPerKm" type="number"></div>
+      </div>
+      <button class="btn-primary" onclick="saveTransport()">Enregistrer la livraison</button>
+
+      <h2 style="margin-top:30px;">Paiement</h2>
+      <div class="form-grid">
+        <div class="field checkbox-field"><label><input type="checkbox" id="payInstEnabled"> Paiement échelonné activé</label></div>
+        <div class="field"><label>Nombre max de tranches</label><input id="payMaxTranches" type="number"></div>
+        <div class="field"><label>Commande minimum pour échelonner</label><input id="payMinOrder" type="number"></div>
+        <div class="field checkbox-field"><label><input type="checkbox" id="payMobileMoney"> Mobile Money activé</label></div>
+        <div class="field checkbox-field"><label><input type="checkbox" id="paySourceDed"> Coupure à la source autorisée</label></div>
+      </div>
+      <button class="btn-primary" onclick="savePayment()">Enregistrer le paiement</button>
+      <p class="muted" style="margin-top:10px;">Mobile Money : ce réglage active l'option côté client. L'encaissement réel nécessite un compte marchand Orange Money/Moov Money — voir README pour la suite. Coupure à la source : reste finalisée hors-ligne avec la banque et l'employeur du client.</p>
+    </section>
+
+    <section id="tab-clients" class="tab-panel hidden">
+      <h2>Tarif individuel par client</h2>
+      <div class="form-grid">
+        <div class="field"><label>Téléphone</label><input id="clPhone" placeholder="+226..."></div>
+        <div class="field"><label>Nom</label><input id="clName"></div>
+        <div class="field"><label>Réduction % (négatif = majoration)</label><input id="clDiscount" type="number" value="0"></div>
+        <div class="field checkbox-field"><label><input type="checkbox" id="clPremium"> Client premium</label></div>
+      </div>
+      <button class="btn-primary" onclick="saveClient()">Enregistrer</button>
+      <h2 style="margin-top:26px;">Clients enregistrés</h2>
+      <div id="clientTable"></div>
+    </section>
+
+    <section id="tab-messages" class="tab-panel hidden">
+      <h2>Conversations clients</h2>
+      <div id="conversationList"></div>
+    </section>
+
+    <section id="tab-commandes" class="tab-panel hidden">
+      <h2>Commandes reçues</h2>
+      <div id="orderTable"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
